@@ -38,12 +38,13 @@ public class Encounter {
 	@JoinColumn(name = "patient_id", nullable = false)
 	private Patient patient;
 	
-	@NotNull(message = "Encounter start time is required")
+	@Column(name = "start_time")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date start;
+	private Date startTime;
 	
+	@Column(name = "end_time")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date end;
+	private Date endTime;
 	
 	@NotBlank(message = "Encounter class is required")
 	private String encounterClass;
