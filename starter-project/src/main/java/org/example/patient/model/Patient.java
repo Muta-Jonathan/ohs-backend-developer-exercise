@@ -6,10 +6,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Pattern;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -33,7 +35,9 @@ public class Patient {
 	
 	private Date birthDate;
 	
-	@Pattern(regexp = "M|F", message = "Gender must be Male (M), Female (F)")
 	private String gender;
 	
+	// A patient can have multiple encounters
+	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Encounter> encounters;
 }

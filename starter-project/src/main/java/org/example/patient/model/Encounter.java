@@ -10,12 +10,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -30,7 +33,7 @@ public class Encounter {
 	@Column(nullable = false, unique = true, updatable = false)
 	private String uuid = UUID.randomUUID().toString();
 	
-	// Reference to the patient who had the encounter
+	// Many encounters belong to one patient
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "patient_id", nullable = false)
 	private Patient patient;
@@ -44,4 +47,8 @@ public class Encounter {
 	
 	@NotBlank(message = "Encounter class is required")
 	private String encounterClass;
+	
+	// One encounter has many observations
+	@OneToMany(mappedBy = "encounter", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Observation> observations;
 }

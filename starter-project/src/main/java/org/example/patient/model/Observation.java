@@ -11,7 +11,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -34,15 +33,13 @@ public class Observation {
 	@JoinColumn(name = "patient_id", nullable = false)
 	private Patient patient;
 	
-	// Optional encounter context
+	// Observation may belong to an encounter
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "encounter_id")
 	private Encounter encounter;
 	
-	@NotBlank(message = "Observation code is required")
 	private String code;
 	
-	@NotBlank(message = "Observation value is required")
 	private String value;
 	
 	@NotNull(message = "Effective date/time is required")
