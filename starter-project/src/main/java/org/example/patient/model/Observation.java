@@ -1,4 +1,4 @@
-package org.example.observation;
+package org.example.patient.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,8 +14,6 @@ import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.example.encounter.Encounter;
-import org.example.patient.Patient;
 
 import java.util.Date;
 import java.util.UUID;
