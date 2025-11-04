@@ -43,6 +43,7 @@ public class Patient {
 	@JsonManagedReference(value = "patient-encounters")
 	private List<Encounter> encounters;
 	
+	// A patient can have multiple observations
 	@OneToMany(mappedBy = "patient",cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference(value = "patient-observations")
 	private List<Observation> observations;

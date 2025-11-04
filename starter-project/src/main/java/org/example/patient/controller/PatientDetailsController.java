@@ -1,5 +1,7 @@
 package org.example.patient.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.patient.model.Encounter;
 import org.example.patient.model.Observation;
 import org.example.patient.repository.EncounterRepository;
@@ -18,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/patient/{id}")
+@Tag(name = "Patients", description = "Operations related to Patient details, Encounters, and Observations")
 public class PatientDetailsController {
 	
 	private final PatientRepository patientRepo;
@@ -34,6 +37,7 @@ public class PatientDetailsController {
 	
 	// GET /api/patient/{id}/encounter
 	@GetMapping("/encounter")
+	@Operation(summary = "Get all encounters for a specific patient")
 	public ResponseEntity<List<Encounter>> getEncounters(@PathVariable Long id) {
 		if (!patientRepo.existsById(id)) return ResponseEntity.notFound().build();
 		List<Encounter> encounters = encounterRepo.findByPatientId(id);
@@ -42,6 +46,7 @@ public class PatientDetailsController {
 	
 	// GET /api/patient/{id}/observation
 	@GetMapping("/observation")
+	@Operation(summary = "Get all observations for a specific patient")
 	public ResponseEntity<List<Observation>> getObservations(@PathVariable Long id) {
 		if (!patientRepo.existsById(id)) return ResponseEntity.notFound().build();
 		List<Observation> observations = observationRepo.findByPatientId(id);
@@ -50,6 +55,7 @@ public class PatientDetailsController {
 	
 	// POST /api/patient/{id}/encounter
 	@PostMapping("/encounter")
+	@Operation(summary = "Create a new encounter for a specific patient")
 	public ResponseEntity<Encounter> createEncounter(
 			@PathVariable Long id,
 			@RequestBody Encounter encounterRequest) {
@@ -63,6 +69,7 @@ public class PatientDetailsController {
 	
 	// POST /api/patient/{id}/observation
 	@PostMapping("/observation")
+	@Operation(summary = "Create a new observation for a specific patient")
 	public ResponseEntity<Observation> createObservation(
 			@PathVariable Long id,
 			@RequestBody Observation observationRequest) {
