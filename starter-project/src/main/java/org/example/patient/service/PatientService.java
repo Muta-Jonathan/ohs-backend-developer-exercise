@@ -16,4 +16,6 @@ public interface PatientService {
 	void deletePatient(Long id);
 	
 	List<Patient> searchPatients(String family, String given, String identifier, String birthDate);
+	
+	List<Patient> getAllPatients();
 }

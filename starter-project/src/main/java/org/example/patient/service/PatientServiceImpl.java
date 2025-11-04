@@ -50,6 +50,12 @@ public class PatientServiceImpl implements PatientService {
 	
 	@Override
 	@Transactional(readOnly = true)
+	public List<Patient> getAllPatients() {
+		return patientRepository.findAll();
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
 	public List<Patient> searchPatients(String family, String given, String identifier, String birthDate) {
 		// fetch all patients and filter in memory
 		List<Patient> allPatients = patientRepository.findAll();

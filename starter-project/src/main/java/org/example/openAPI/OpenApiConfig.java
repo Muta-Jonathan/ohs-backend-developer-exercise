@@ -12,7 +12,7 @@ public class OpenApiConfig {
 	public OpenAPI customOpenAPI() {
 		return new OpenAPI()
 				.info(new Info()
-						.title("Digital Health API")
+						.title("OHS Digital Health API")
 						.version("1.0")
 						.description("API for managing Patients, Encounters, and Observations"));
 	}

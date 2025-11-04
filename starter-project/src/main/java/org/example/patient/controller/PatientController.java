@@ -74,4 +74,12 @@ public class PatientController {
 		List<Patient> results = patientService.searchPatients(family, given, identifier, birthDate);
 		return ResponseEntity.ok(results);
 	}
+	
+	// GET /api/patient/all
+	@GetMapping("/all")
+	@Operation(summary = "Get all patients")
+	public ResponseEntity<List<Patient>> getAllPatients() {
+		List<Patient> patients = patientService.getAllPatients();
+		return ResponseEntity.ok(patients);
+	}
 }
