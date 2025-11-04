@@ -1,5 +1,7 @@
 package org.example.patient.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,7 +15,6 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -36,6 +37,7 @@ public class Encounter {
 	// Many encounters belong to one patient
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "patient_id", nullable = false)
+	@JsonBackReference(value = "patient-encounters")
 	private Patient patient;
 	
 	@Column(name = "start_time")
@@ -51,5 +53,6 @@ public class Encounter {
 	
 	// One encounter has many observations
 	@OneToMany(mappedBy = "encounter", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference(value = "encounter-observations")
 	private List<Observation> observations;
 }

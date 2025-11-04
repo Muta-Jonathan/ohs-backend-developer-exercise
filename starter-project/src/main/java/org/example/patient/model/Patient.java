@@ -1,5 +1,6 @@
 package org.example.patient.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,5 +40,10 @@ public class Patient {
 	
 	// A patient can have multiple encounters
 	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference(value = "patient-encounters")
 	private List<Encounter> encounters;
+	
+	@OneToMany(mappedBy = "patient",cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference(value = "patient-observations")
+	private List<Observation> observations;
 }
