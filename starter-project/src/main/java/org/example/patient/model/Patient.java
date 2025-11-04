@@ -9,6 +9,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Past;
 import lombok.Data;
 
 import java.util.Date;
@@ -34,6 +37,8 @@ public class Patient {
 	
 	private String familyName;
 	
+	@Past
+	@Temporal(TemporalType.DATE)
 	private Date birthDate;
 	
 	private String gender;
