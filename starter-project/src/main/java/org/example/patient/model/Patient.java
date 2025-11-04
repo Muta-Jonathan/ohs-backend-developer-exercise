@@ -11,7 +11,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 import java.util.Date;
@@ -31,16 +33,19 @@ public class Patient {
 	private String uuid = UUID.randomUUID().toString();
 	
 	@Column(nullable = false, unique = true)
+	@NotBlank(message = "Patient identifier is required")
 	private String identifier;
 	
+	@NotBlank(message = "Given name is required")
 	private String givenName;
 	
 	private String familyName;
 	
-	@Past
+	@Past(message = "Birth date must be in the past")
 	@Temporal(TemporalType.DATE)
 	private Date birthDate;
 	
+	@Pattern(regexp = "M|F|U", message = "Gender must be Male (M), Female (F), or Unknown (U)")
 	private String gender;
 	
 	// A patient can have multiple encounters

@@ -44,7 +44,7 @@ public class PatientController {
 	// PUT /api/patient/{id}
 	@PutMapping("/{id}")
 	@Operation(summary = "Update an existing patient")
-	public ResponseEntity<Patient> updatePatient(@PathVariable Long id,
+	public ResponseEntity<Patient> updatePatient(@Valid @PathVariable Long id,
 			@Valid @RequestBody Patient patient) {
 		try {
 			Patient updated = patientService.updatePatient(id, patient);

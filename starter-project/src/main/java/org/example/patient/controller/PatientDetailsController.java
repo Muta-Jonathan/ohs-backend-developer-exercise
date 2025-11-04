@@ -2,6 +2,7 @@ package org.example.patient.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.example.patient.model.Encounter;
 import org.example.patient.model.Observation;
 import org.example.patient.repository.EncounterRepository;
@@ -57,6 +58,7 @@ public class PatientDetailsController {
 	@PostMapping("/encounter")
 	@Operation(summary = "Create a new encounter for a specific patient")
 	public ResponseEntity<Encounter> createEncounter(
+			@Valid
 			@PathVariable Long id,
 			@RequestBody Encounter encounterRequest) {
 		
@@ -71,6 +73,7 @@ public class PatientDetailsController {
 	@PostMapping("/observation")
 	@Operation(summary = "Create a new observation for a specific patient")
 	public ResponseEntity<Observation> createObservation(
+			@Valid
 			@PathVariable Long id,
 			@RequestBody Observation observationRequest) {
 		
