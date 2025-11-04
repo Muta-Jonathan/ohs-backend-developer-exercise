@@ -29,7 +29,7 @@ Getting Started
 API Endpoints
 -----------------
 ### Patient Endpoints
-- `POST /api/patient`: Create a new patient.
+- `POST /api/patients`: Create a new patient.
 
 Example request body:
 ```json
@@ -41,7 +41,7 @@ Example request body:
   "gender": "F"
 }
 ```
-- `GET /api/patient/{id}`: Retrieve patient details by ID.
+- `GET /api/patients/{id}`: Retrieve patient details by ID.
 
 Example response body:
 ```json
@@ -58,9 +58,9 @@ Example response body:
 }
   ```
 
-- `PUT /api/patient/{id}`: Update patient information.
-- `DELETE /api/patient/{id}`: Delete a patient by ID.
-- `GET /api/patient/all`: List all patients.
+- `PUT /api/patients/{id}`: Update patient information.
+- `DELETE /api/patients/{id}`: Delete a patient by ID.
+- `GET /api/patients/all`: List all patients.
 
 Example response body:
 ```json
@@ -89,7 +89,7 @@ Example response body:
     }
 ]
 ```
-- `GET /api/patient?family=&given=&identifier=&birthDate=`: Search patients by optional query parameters: family name, given name, identifier, and birth date.
+- `GET /api/patients?family=&given=&identifier=&birthDate=`: Search patients by optional query parameters: family name, given name, identifier, and birth date.
 
 ### Encounter Endpoints
 - `POST /api/encounters`: Create a new encounter.
@@ -107,7 +107,7 @@ Example request body:
 
 #### How to Use It
 
-* Patient ID (id): This is required in the URL. For example, /api/patient/1/encounter.
+* Patient ID (id): This is required in the URL. For example, /api/patients/1/encounter.
 * Pagination: You can limit results using page (0-based) and size (number of results per page). By default, page is 0 and size is 10.
 * Sorting: You can sort by any field using sortBy. By default, results are sorted by startTime in descending order.
 * Date filters: If you want encounters within a specific period, you can add startDate and endDate in ISO format (yyyy-MM-dd).
@@ -117,7 +117,7 @@ Example request body:
 To get the first 10 encounters of patient of id - 1 sorted by start time, between November 1 and November 30, 2025:
 
 ```json
-GET /api/patient/1/encounter?sortBy=startTime&page=0&size=10&startDate=2025-11-01&endDate=2025-11-30
+GET /api/patients/1/encounter?sortBy=startTime&page=0&size=10&startDate=2025-11-01&endDate=2025-11-30
 ```
 #### Example Response
 

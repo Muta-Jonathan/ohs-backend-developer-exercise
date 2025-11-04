@@ -27,7 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/patient/{id}")
+@RequestMapping("/api/patients/{id}")
 @Tag(name = "Patients", description = "Operations related to Patient details, Encounters, and Observations")
 public class PatientDetailsController {
 	
@@ -44,7 +44,7 @@ public class PatientDetailsController {
 	}
 	
 	/**
-	 * GET /api/patient/{id}/encounter
+	 * GET /api/patients/{id}/encounters
 	 * @param id
 	 * @param sortBy default "startTime"
 	 * @param page default 0
@@ -53,7 +53,7 @@ public class PatientDetailsController {
 	 * @param endDate not required
 	 * @return
 	 */
-	@GetMapping("/encounter")
+	@GetMapping("/encounters")
 	@Operation(summary = "Get all encounters for a specific patient")
 	public ResponseEntity<Page<Encounter>> getEncounters(
 			@PathVariable Long id,
@@ -76,8 +76,8 @@ public class PatientDetailsController {
 		return ResponseEntity.ok(encounters);
 	}
 	
-	// GET /api/patient/{id}/observation
-	@GetMapping("/observation")
+	// GET /api/patients/{id}/observations
+	@GetMapping("/observations")
 	@Operation(summary = "Get all observations for a specific patient")
 	public ResponseEntity<List<Observation>> getObservations(@PathVariable Long id) {
 		if (!patientRepo.existsById(id)) return ResponseEntity.notFound().build();
@@ -85,8 +85,8 @@ public class PatientDetailsController {
 		return ResponseEntity.ok(observations);
 	}
 	
-	// POST /api/patient/{id}/encounter
-	@PostMapping("/encounter")
+	// POST /api/patients/{id}/encounters
+	@PostMapping("/encounters")
 	@Operation(summary = "Create a new encounter for a specific patient")
 	public ResponseEntity<Encounter> createEncounter(
 			@Valid
@@ -100,8 +100,8 @@ public class PatientDetailsController {
 		}).orElse(ResponseEntity.notFound().build());
 	}
 	
-	// POST /api/patient/{id}/observation
-	@PostMapping("/observation")
+	// POST /api/patients/{id}/observations
+	@PostMapping("/observations")
 	@Operation(summary = "Create a new observation for a specific patient")
 	public ResponseEntity<Observation> createObservation(
 			@Valid

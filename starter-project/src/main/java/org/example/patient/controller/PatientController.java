@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/patient")
+@RequestMapping("/api/patients")
 @Validated
 @Tag(name = "Patients", description = "CRUD operations for Patients")
 public class PatientController {
@@ -24,7 +24,7 @@ public class PatientController {
 		this.patientService = patientService;
 	}
 	
-	// POST /api/patient
+	// POST /api/patients
 	@PostMapping
 	@Operation(summary = "Create a new patient")
 	public ResponseEntity<Patient> createPatient(@Valid @RequestBody Patient patient) {
@@ -32,7 +32,7 @@ public class PatientController {
 		return new ResponseEntity<>(saved, HttpStatus.CREATED);
 	}
 	
-	// GET /api/patient/{id}
+	// GET /api/patients/{id}
 	@GetMapping("/{id}")
 	@Operation(summary = "Get patient by ID")
 	public ResponseEntity<Patient> getPatient(@PathVariable Long id) {
@@ -41,7 +41,7 @@ public class PatientController {
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
-	// PUT /api/patient/{id}
+	// PUT /api/patients/{id}
 	@PutMapping("/{id}")
 	@Operation(summary = "Update an existing patient")
 	public ResponseEntity<Patient> updatePatient(@Valid @PathVariable Long id,
@@ -54,7 +54,7 @@ public class PatientController {
 		}
 	}
 	
-	// DELETE /api/patient/{id}
+	// DELETE /api/patients/{id}
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Delete a patient by ID")
 	public ResponseEntity<Void> deletePatient(@PathVariable Long id) {
@@ -62,7 +62,7 @@ public class PatientController {
 		return ResponseEntity.noContent().build();
 	}
 	
-	// GET /api/patient?family=&given=&identifier=&birthDate=
+	// GET /api/patients?family=&given=&identifier=&birthDate=
 	@GetMapping
 	@Operation(summary = "Search patients by optional parameters")
 	public ResponseEntity<List<Patient>> searchPatients(
@@ -75,7 +75,7 @@ public class PatientController {
 		return ResponseEntity.ok(results);
 	}
 	
-	// GET /api/patient/all
+	// GET /api/patients/all
 	@GetMapping("/all")
 	@Operation(summary = "Get all patients")
 	public ResponseEntity<List<Patient>> getAllPatients() {
