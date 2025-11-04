@@ -103,7 +103,64 @@ Example request body:
 }
 ```
 - `GET /api/encounters/{id}`: Retrieve encounter details by ID.
+  This endpoint fetches all encounters for a specific patient. It supports pagination, sorting, and filtering by a date range.
 
+#### How to Use It
+
+* Patient ID (id): This is required in the URL. For example, /api/patient/1/encounter.
+* Pagination: You can limit results using page (0-based) and size (number of results per page). By default, page is 0 and size is 10.
+* Sorting: You can sort by any field using sortBy. By default, results are sorted by startTime in descending order.
+* Date filters: If you want encounters within a specific period, you can add startDate and endDate in ISO format (yyyy-MM-dd).
+
+#### Example Request
+
+To get the first 10 encounters of patient of id - 1 sorted by start time, between November 1 and November 30, 2025:
+
+```json
+GET /api/patient/1/encounter?sortBy=startTime&page=0&size=10&startDate=2025-11-01&endDate=2025-11-30
+```
+#### Example Response
+
+The response returns a paginated result with metadata:
+```json
+{
+   "content": [
+      {
+         "id": 1,
+         "uuid": "enc-001",
+         "startTime": "2025-11-04T09:30:00.000+00:00",
+         "endTime": "2025-11-04T10:00:00.000+00:00",
+         "encounterClass": "Outpatient",
+         "observations": []
+      }
+   ],
+   "pageable": {
+      "pageNumber": 0,
+      "pageSize": 10,
+      "sort": {
+         "empty": false,
+         "sorted": true,
+         "unsorted": false
+      },
+      "offset": 0,
+      "paged": true,
+      "unpaged": false
+   },
+   "last": true,
+   "totalElements": 1,
+   "totalPages": 1,
+   "first": true,
+   "size": 10,
+   "number": 0,
+   "sort": {
+      "empty": false,
+      "sorted": true,
+      "unsorted": false
+   },
+   "numberOfElements": 1,
+   "empty": false
+}
+```
 ### Observation Endpoints
 - `POST /api/observations`: Create a new observation.
 - `GET /api/observations/{id}`: Retrieve observation details by ID.

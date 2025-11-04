@@ -8,6 +8,11 @@ import org.example.patient.model.Observation;
 import org.example.patient.repository.EncounterRepository;
 import org.example.patient.repository.ObservationRepository;
 import org.example.patient.repository.PatientRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -36,12 +43,36 @@ public class PatientDetailsController {
 		this.observationRepo = observationRepo;
 	}
 	
-	// GET /api/patient/{id}/encounter
+	/**
+	 * GET /api/patient/{id}/encounter
+	 * @param id
+	 * @param sortBy default "startTime"
+	 * @param page default 0
+	 * @param size default 10
+	 * @param startDate not required
+	 * @param endDate not required
+	 * @return
+	 */
 	@GetMapping("/encounter")
 	@Operation(summary = "Get all encounters for a specific patient")
-	public ResponseEntity<List<Encounter>> getEncounters(@PathVariable Long id) {
+	public ResponseEntity<Page<Encounter>> getEncounters(
+			@PathVariable Long id,
+			@RequestParam(defaultValue = "startTime") String sortBy,
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size,
+			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate
+	) {
 		if (!patientRepo.existsById(id)) return ResponseEntity.notFound().build();
-		List<Encounter> encounters = encounterRepo.findByPatientId(id);
+		
+		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
+		
+		Page<Encounter> encounters;
+		if (startDate != null && endDate != null) {
+			encounters = encounterRepo.findByPatientIdAndStartTimeBetween(id, startDate, endDate, pageable);
+		} else {
+			encounters = encounterRepo.findByPatientId(id, pageable);
+		}
 		return ResponseEntity.ok(encounters);
 	}
 	
